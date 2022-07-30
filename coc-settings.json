@@ -1,0 +1,23 @@
+{
+  "suggest.floatEnable": false,
+  "suggest.autoTrigger": true,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.virtualText": true,
+  "signature.enable": false,
+  "codeLens.enable": false,
+  "javascript.validate.enable": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.quiet": true,
+  "eslint.format.enable": true,
+  "stylelintplus.autoFixOnSave": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "typescript",
+    "javascript",
+    "javascriptreact",
+    "typescriptreact",
+    "json"
+  ],
+}
+
