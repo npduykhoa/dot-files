@@ -17,7 +17,7 @@ Plug 'mhinz/vim-startify'
 Plug 'morhetz/gruvbox' | Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 
 " Highlight Tokens
-Plug 'sheerun/vim-polyglot'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Popup
 Plug 'voldikss/vim-floaterm'
@@ -41,6 +41,8 @@ let mapleader=' '
 
 nmap <leader>w :w<CR>
 nmap <leader>e :q!<CR>
+
+set clipboard+=unnamedplus
 
 set number
 set relativenumber
@@ -101,6 +103,16 @@ let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.dirty='⚡'
 let g:airline_symbols.colnr='col'"
 let g:airline#extensions#tabline#enabled = 1
+
+lua << EOF
+
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  },
+}
+
+EOF
 
 "---Nerd Tree---
 autocmd VimEnter * NERDTree
