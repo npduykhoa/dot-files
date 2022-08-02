@@ -5,7 +5,7 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "************************************************
 
 "---Snippets
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'jiangmiao/auto-pairs' | Plug 'alvan/vim-closetag'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
@@ -27,6 +27,9 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 
 " Git
 Plug 'f-person/git-blame.nvim' | Plug 'tpope/vim-fugitive' | Plug 'airblade/vim-gitgutter', {'branch': 'master'}
+
+" Diffview
+Plug 'nvim-lua/plenary.nvim' | Plug 'sindrets/diffview.nvim'
 
 " Coc vim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -55,6 +58,16 @@ set updatetime=300
 set autoread
 set lazyredraw
 
+"---Search keyword & replace all in file---
+vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+    \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+omap s :normal vs<CR>
+
+"---DiffView---
+nmap dc :DiffviewClose<CR>
+nmap do :DiffviewOpen<CR>
+nmap dh :DiffviewFileHistory<CR>
+
 "---Themes---
 syntax enable
 set background=dark
@@ -65,6 +78,8 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <C-v> <C-w>v
+nnoremap <C-s> <C-w>s
 
 "---Auto Complete & Import---
 inoremap <silent><expr> <C-space> coc#refresh()
@@ -75,7 +90,7 @@ inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
 "**********************************************
 
 "---FloatTerm---
-let g:floaterm_keymap_toggle = '<leader>f'
+let g:floaterm_keymap_toggle = '<leader>ft'
 let g:floaterm_gitcommit='floaterm'
 let g:floaterm_width=0.8
 let g:floaterm_height=0.8
@@ -129,9 +144,9 @@ command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-hea
 nnoremap <silent> <leader>f :Rg<CR>
 
 "---Prettier---
-command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_require_pragma = 0
+"command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+"let g:prettier#autoformat = 1
+"let g:prettier#autoformat_require_pragma = 0
 
 "---Startify---
 let g:startify_change_to_dir = 0
