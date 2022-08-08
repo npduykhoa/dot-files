@@ -8,4 +8,5 @@ Resources:
 - https://github.com/nartvt/dotfiles
 - https://viblo.asia/p/how-to-boost-your-vim-productivity-RQqKLn3rl7z
 - https://www.laptrinhdeom.xyz/categories/vim/
+- https://www.reddit.com/r/vim/comments/qnpgpt/startify_full_width_in_gvim_with_nerdtree/
 
