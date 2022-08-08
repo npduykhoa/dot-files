@@ -34,6 +34,12 @@ Plug 'nvim-lua/plenary.nvim' | Plug 'sindrets/diffview.nvim'
 " Coc vim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Indent Line
+Plug 'lukas-reineke/indent-blankline.nvim'
+
+" Go to detail
+Plug 'pechorin/any-jump.vim'
+
 call plug#end()
 
 "***********************************************
@@ -58,6 +64,10 @@ set updatetime=300
 set autoread
 set lazyredraw
 
+"autocmd BufReadPost * echo strftime("%c")
+"---Auto open Nerdtree and Startify when start Vim
+autocmd VimEnter * if !argc() | Startify | wincmd o | NERDTree | wincmd w | endif
+
 "---Search keyword & replace all in file---
 vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
@@ -81,6 +91,15 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-v> <C-w>v
 nnoremap <C-s> <C-w>s
 
+"---Visual mode---
+vmap < <gv
+vmap > >gv
+vmap J :m '>+1<CR>gv=gvzz
+vmap K :m '<-2<CR>gv=gvzz
+
+"---Ignore highlight text---
+nnoremap <silent> <Space><Space> :noh<CR>
+
 "---Auto Complete & Import---
 inoremap <silent><expr> <C-space> coc#refresh()
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
@@ -91,6 +110,10 @@ inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
 
 "---FloatTerm---
 let g:floaterm_keymap_toggle = '<leader>ft'
+let g:floaterm_keymap_new = 'fo'
+let g:floaterm_keymap_prev = 'fp'
+let g:floaterm_keymap_next = 'fn'
+let g:floaterm_keymap_kill = 'fk'
 let g:floaterm_gitcommit='floaterm'
 let g:floaterm_width=0.8
 let g:floaterm_height=0.8
@@ -123,14 +146,40 @@ lua << EOF
 
 require'nvim-treesitter.configs'.setup {
   highlight = {
-    enable = true,
+  enable = true,
   },
+}
+
+vim.opt.list = true
+--vim.opt.listchars:append "space:⋅"
+vim.opt.listchars:append "eol:↴"
+
+vim.opt.termguicolors = true
+vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+
+require'indent_blankline'.setup {
+  space_char_blankline = " ",
+  show_current_context = true,
+  show_current_context_start = true,
+  char_highlight_list = {
+    "IndentBlanklineIndent1",
+    "IndentBlanklineIndent2",
+    "IndentBlanklineIndent3",
+    "IndentBlanklineIndent4",
+    "IndentBlanklineIndent5",
+    "IndentBlanklineIndent6",
+ },
 }
 
 EOF
 
 "---Nerd Tree---
-autocmd VimEnter * NERDTree
+"autocmd VimEnter * NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <leader>u :vertical resize +10<CR>
 nnoremap <leader>d :vertical resize -10<CR>
@@ -142,6 +191,16 @@ set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
 let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path '**/node_modules/**' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case --fixed-strings ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
 nnoremap <silent> <leader>f :Rg<CR>
+
+"---Any jump---
+" Normal mode: Jump to definition under cursor
+nnoremap <leader>j :AnyJump<CR>
+" Visual mode: jump to selected text in visual mode
+xnoremap <leader>j :AnyJumpVisual<CR>
+" Normal mode: open previous opened file (after jump)
+nnoremap <leader>ab :AnyJumpBack<CR>
+" Normal mode: open last closed search window again
+nnoremap <leader>al :AnyJumpLastResults<CR>
 
 "---Prettier---
 "command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
