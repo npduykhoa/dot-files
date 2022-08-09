@@ -50,6 +50,7 @@ let mapleader=' '
 
 nmap <leader>w :w<CR>
 nmap <leader>e :q!<CR>
+nmap <leader>k :noa w<CR>
 
 set clipboard+=unnamedplus
 
@@ -60,7 +61,7 @@ set shiftwidth=2
 set expandtab
 set hidden
 set laststatus=2
-set updatetime=300
+set updatetime=250
 set autoread
 set lazyredraw
 
@@ -110,10 +111,10 @@ inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
 
 "---FloatTerm---
 let g:floaterm_keymap_toggle = '<leader>ft'
-let g:floaterm_keymap_new = 'fo'
-let g:floaterm_keymap_prev = 'fp'
-let g:floaterm_keymap_next = 'fn'
-let g:floaterm_keymap_kill = 'fk'
+let g:floaterm_keymap_new = '<leader>fo'
+let g:floaterm_keymap_prev = '<leader>fp'
+let g:floaterm_keymap_next = '<leader>fn'
+let g:floaterm_keymap_kill = '<leader>fk'
 let g:floaterm_gitcommit='floaterm'
 let g:floaterm_width=0.8
 let g:floaterm_height=0.8
