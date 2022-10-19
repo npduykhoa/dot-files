@@ -1,8 +1,11 @@
 {
   "suggest.floatEnable": false,
-  "suggest.autoTrigger": true,
+  "suggest.autoTrigger": "trigger",
   "diagnostic.checkCurrentLine": true,
   "diagnostic.virtualText": true,
+  "diagnostic.errorSign": "",
+  "git.changedSign.text": "פֿ",
+  "git.removedSign.text": "",
   "signature.enable": false,
   "codeLens.enable": false,
   "javascript.validate.enable": false,
@@ -19,5 +22,31 @@
     "typescriptreact",
     "json"
   ],
+"suggest.completionItemKindLabels": {
+    "method": "  ",
+    "function": " unction ",
+    "variable": "[]",
+    "field": "  ",
+    "typeParameter": "<>",
+    "constant": "  ",
+    "class": " פּ ",
+    "interface": " 蘒",
+    "struct": "  ",
+    "event": "  ",
+    "operator": "  ",
+    "module": "  ",
+    "property": "  ",
+    "enum": " 練",
+    "reference": "  ",
+    "keyword": "  ",
+    "file": "  ",
+    "folder": " ﱮ ",
+    "color": "  ",
+    "unit": " 塞 ",
+    "snippet": "  ",
+    "text": "  ",
+    "constructor": "  ",
+    "value": "  ",
+    "enumMember": "  "
+  }
 }
-
