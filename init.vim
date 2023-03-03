@@ -5,19 +5,24 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 "************************************************
 
 "---Snippets
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'jiangmiao/auto-pairs' | Plug 'alvan/vim-closetag'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'windwp/nvim-ts-autotag'
 
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 " Greeting Screen
 Plug 'mhinz/vim-startify'
 
 " Fonts & Themes
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' } | Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' | Plug 'ryanoasis/vim-devicons' | Plug 'kyazdani42/nvim-web-devicons' | Plug 'vwxyutarooo/nerdtree-devicons-syntax'
+" Plug 'morhetz/gruvbox'
+"Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'luisiacc/gruvbox-baby', {'branch': 'main'}
+Plug 'nvim-lualine/lualine.nvim'
 
 " Highlight Tokens
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} | Plug 'p00f/nvim-ts-rainbow'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} | Plug 'nvim-treesitter/nvim-treesitter-refactor' | Plug 'p00f/nvim-ts-rainbow' | Plug 'norcalli/nvim-colorizer.lua'
 
 " Popup
 Plug 'voldikss/vim-floaterm' | Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
@@ -43,6 +48,14 @@ Plug 'pechorin/any-jump.vim'
 " Sound Keyboard
 Plug 'skywind3000/vim-keysound'
 
+" Comment line
+Plug 'JoosepAlviste/nvim-ts-context-commentstring' | Plug 'tpope/vim-commentary'
+
+"Plug 'edluffy/specs.nvim'
+
+"Plug 'eandrju/cellular-automaton.nvim'
+
+
 call plug#end()
 
 "***********************************************
@@ -58,6 +71,10 @@ nmap <leader>e :q!<CR>
 nmap <leader>k :noa w<CR>
 nmap <leader>r :e!<CR>
 
+set fillchars+=vert:\|
+set backspace=indent,eol,start
+set noshowmode
+set cmdheight=0
 set clipboard+=unnamedplus
 set whichwrap+=<,>,h,l,[,]
 set encoding=utf-8
@@ -69,17 +86,30 @@ set shiftwidth=2
 set expandtab
 set hidden
 set laststatus=2
-set updatetime=250
+set updatetime=100
 set autoread
-set lazyredraw
-set ttyfast
-set mmp=500000
+set signcolumn=number
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set termguicolors
+"--vim faster configs
+" set lazyredraw
+" set ttyfast
+" set mmp=500000
+" set modeline
+" set re=2
+" set synmaxcol=128
+" syntax sync minlines=256
+syntax enable
+
 "---Transparent background
 au VimEnter * highlight Normal ctermbg=NONE guibg=NONE
 
 "autocmd BufReadPost * echo strftime("%c")
 "---Auto open Nerdtree and Startify when start Vim
-autocmd VimEnter * if !argc() | Startify | wincmd o | NERDTree | wincmd w | endif
+"autocmd VimEnter * if !argc() | Startify | wincmd o | NERDTree | wincmd w | endif
 
 "---Search keyword & replace all in file---
 vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
@@ -92,9 +122,8 @@ nmap do :DiffviewOpen<CR>
 nmap dh :DiffviewFileHistory<CR>
 
 "---Themes---
-syntax enable
 set background=dark
-colorscheme tokyonight
+color gruvbox
 
 "---Navigation Panel---
 nnoremap <C-h> <C-w>h
@@ -115,11 +144,11 @@ vmap J :m '>+1<CR>gv=gvzz
 vmap K :m '<-2<CR>gv=gvzz
 
 "---Ignore highlight text---
-nnoremap <silent> <Space><Space> :noh<CR>
+nnoremap <silent> <leader>h :noh<CR>
 
 "---Auto Complete & Import---
 inoremap <silent><expr> <C-space> coc#refresh()
-inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<C-g>u\<TAB>"
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 "**********************************************
 "(            Plugins Configuration           )
@@ -137,7 +166,7 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>gf :Easypick changed_files<cr>
 nnoremap <leader>gh :Easypick conflicts<cr>
-
+nnoremap <leader>fb :Telescope file_browser path=%:p:h<cr>
 "---FloatTerm---
 let g:floaterm_keymap_toggle = '<leader>ft'
 let g:floaterm_keymap_new = '<leader>fo'
@@ -151,75 +180,137 @@ let g:floaterm_wintitle=0
 let g:floaterm_autoclose=1
 let g:floaterm_completeoptPreview=1
 
-"---Airline---
-" :AirlineTheme simple
-" https://github.com/vim-airline/vim-airline-themes/tree/master/autoload/airline/themes
-let g:airline_theme='zenburn'
-let g:airline_powerline_fonts=1
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = 'ln'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.dirty='⚡'
-let g:airline_symbols.colnr='col'"
-let g:airline#extensions#tabline#enabled = 1
-
 lua << EOF
+
+--disable some builtin vim plugins
+local g = vim.g
+local cmd = vim.cmd
+
+cmd('filetype on')
+local disabled_built_ins = {
+  "2html_plugin",
+  "getscript",
+  "getscriptPlugin",
+  "gzip",
+  "logipat",
+  "netrw",
+  "netrwPlugin",
+  "netrwSettings",
+  "netrwFileHandlers",
+  "matchit",
+  "tar",
+  "tarPlugin",
+  "rrhelper",
+  "spellfile_plugin",
+  "vimball",
+  "vimballPlugin",
+  "zip",
+  "zipPlugin",
+}
+for _, plugin in pairs(disabled_built_ins) do
+  g["loaded_" .. plugin] = 1
+end
 
 local easypick = require("easypick")
 local base_branch = "master"
 local actions = require('telescope.actions')
+local fb_actions = require("telescope").extensions.file_browser.actions
+
+local previewers = require('telescope.previewers')
+
+local preview_maker = function (filepath, bufnr, opts)
+  local bad_files = function (filepath)
+    local _bad = { 'metadata/.*%.json', 'html2pdf.bundle.min' } -- Put all filetypes that slow you down in this array
+    for _, v in ipairs(_bad) do
+      if filepath:match(v) then
+        return false
+      end
+    end
+    return true
+  end
+
+  opts = opts or {}
+  if opts.use_ft_detect == nil then opts.use_ft_detect = true end
+  opts.use_ft_detect = opts.use_ft_detect == false and false or bad_files(filepath)
+  previewers.buffer_previewer_maker(filepath, bufnr, opts)
+end
 
 easypick.setup({
-	pickers = {
-		-- add your custom pickers here
-		-- below you can find some examples of what those can look like
-
-		-- list files inside current folder with default previewer
-		{
-			-- name for your custom picker, that can be invoked using :Easypick <name> (supports tab completion)
-			name = "ls",
-			-- the command to execute, output has to be a list of plain text entries
-			command = "ls",
-			-- specify your custom previwer, or use one of the easypick.previewers
-			previewer = easypick.previewers.default()
-		},
-
-		-- diff current branch with base_branch and show files that changed with respective diffs in preview 
-		{
-			name = "changed_files",
-			command = "git diff --name-only $(git merge-base HEAD " .. base_branch .. " )",
-			previewer = easypick.previewers.branch_diff({base_branch = base_branch})
-		},
-		
-		-- list files that have conflicts with diffs in preview
-		{
-			name = "conflicts",
-			command = "git diff --name-only --diff-filter=U --relative",
-			previewer = easypick.previewers.file_diff()
-		},
-	}
+  pickers = {
+    {
+      name = "ls",
+      command = "ls",
+      previewer = easypick.previewers.default()
+    },
+    {
+      name = "changed_files",
+      command = "git diff --name-only $(git merge-base HEAD " .. base_branch .. " )",
+      previewer = easypick.previewers.branch_diff({base_branch = base_branch})
+    },
+    {
+      name = "conflicts",
+      command = "git diff --name-only --diff-filter=U --relative",
+      previewer = easypick.previewers.file_diff()
+    },
+  }
 })
+
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {{ 'filename', path = 1 }},
+    lualine_x = {},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {},
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
 
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
+    use_languagetree = true,
+    -- additional_vim_regex_highlighting = false,
+  },
+  autotag = {
+    enable = true,
   },
   rainbow = {
     enable = true,
-    extended_mode = true,
-    max_file_lines = nil,
-  }
+  },
+  context_commentstring = {
+    enable = true
+  },
+  refactor = {
+    highlight_definitions = {
+      enable = true,
+      clear_on_cursor_move = true,
+    },
+    highlight_current_scope = { enable = true },
+  },
 }
 
 require'telescope'.setup {
@@ -228,6 +319,17 @@ require'telescope'.setup {
     layout_conig = {
       width = 0.8,
       height = 0.8,
+    },
+    borderchars = {
+      prompt = { " ", " ", " ", " ", "─", "─", " ", " " },
+      results = { " "},
+      preview = { " " },
+
+      -- prompt = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+      -- results = { "─", " ", " ", "│", "╭", "╮", " ", " " },
+      -- preview = { "─", "│", "─", " ", "╭", "╮", "╯", "╰" },
+
+      -- "─", "│", "─", "│", "╭", "╮", "╯", "╰"
     },
     vimgrep_arguments = {
       'rg',
@@ -246,6 +348,28 @@ require'telescope'.setup {
       '.git/',
     },
     buffer_previewer_maker = preview_maker,
+    preview = {
+      mime_hook = function(filepath, bufnr, opts)
+        local split_path = vim.split(filepath:lower(), '.', { plain = true })
+        local ext = split_path[#split_path]
+
+        if vim.tbl_contains({ 'png', 'jpg', 'jpeg' }, ext) then
+          local term = vim.api.nvim_open_term(bufnr, {})
+          local function send_output(_, data, _)
+            for _, d in ipairs(data) do
+              vim.api.nvim_chan_send(term, d .. '\r\n')
+            end
+          end
+
+          vim.fn.jobstart(
+            { 'catimg', '-w 150', filepath },
+            { on_stdout = send_output, stdout_buffered = true }
+          )
+        else
+          require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, "Binary cannot be previewed")
+        end
+      end
+    },
     mappings = {
       i = {
         ["<esc>"] = actions.close,
@@ -273,83 +397,59 @@ require'telescope'.setup {
       },
     },
   },
-  preview = {
-    mime_hook = function(filepath, bufnr, opts)
-      local split_path = vim.split(filepath:lower(), '.', { plain = true })
-      local ext = split_path[#split_path]
-
-      if vim.tbl_contains({ 'png', 'jpg', 'jpeg' }, ext) then
-        local term = vim.api.nvim_open_term(bufnr, {})
-        local function send_output(_, data, _)
-          for _, d in ipairs(data) do
-            vim.api.nvim_chan_send(term, d .. '\r\n')
-          end
-        end
-
-        vim.fn.jobstart(
-          { 'catimg', '-w 150', filepath },
-          { on_stdout = send_output, stdout_buffered = true }
-        )
-      else
-        require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid, "Binary cannot be previewed")
-      end
-    end
+  extensions = {
+    project = {
+      hidden_files = true
+    },
+    fzf = {
+      fuzzy = true, -- false will only do exact matching
+      override_generic_sorter = true, -- override the generic sorter
+      override_file_sorter = true, -- override the file sorter
+      case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+    },
+    file_browser = {
+      mappings = {
+        ['i'] = {
+          ['<C-e>'] = fb_actions.create,
+          ['<C-r>'] = fb_actions.rename,
+          ['<C-p>'] = fb_actions.move,
+          ['<C-y>'] = fb_actions.copy,
+          ['<C-d>'] = fb_actions.remove,
+        },
+      }
+    }
   },
 }
+
+vim.keymap.set("n", "<leader>bo", "<cmd>%bd|e#<cr>", {desc="Close all buffers but the current one"})
+
+-- Load the colorscheme
+ vim.cmd[[colors tokyonight-storm]]
+
+require('telescope').load_extension('file_browser')
+
+--vim.keymap.set("n", "<leader>fml", "<cmd>CellularAutomaton make_it_rain<CR>")
+vim.keymap.set("n", '<leader><leader>', ':if exists("g:syntax_on")<Bar>syntax off<Bar>else<Bar>syntax on<Bar>endif<CR>|:TSToggle highlight<CR>|:TSToggle rainbow<CR>')
 
 vim.opt.list = true
 --vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "eol:↴"
 
-vim.opt.termguicolors = true
-vim.cmd [[highlight IndentBlanklineIndent1 guibg=#1f1f1f gui=nocombine]]
-vim.cmd [[highlight IndentBlanklineIndent2 guibg=#1a1a1a gui=nocombine]]
+-- vim.opt.termguicolors = true
 
 require("indent_blankline").setup {
-  char = "",
-  char_highlight_list = {
-      "IndentBlanklineIndent1",
-      "IndentBlanklineIndent2",
-  },
-  space_char_highlight_list = {
-      "IndentBlanklineIndent1",
-      "IndentBlanklineIndent2",
-  },
-  show_trailing_blankline_indent = false,
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
 }
 
+require 'colorizer'.setup({
+  '*';
+  scss = { rgb_fn = true; };
+  html = { names = false; };
+  }, { mode = 'foreground' })
+
 EOF
-
-"---NERDTree---
-"autocmd VimEnter * NERDTree
-nnoremap <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeGitStatusUseNerdFonts = 1
-
-"---NERDTree sync to current file activating
-function! IsNERDTreeOpen()
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
-
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
-function! SyncTree()
-  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
-
-" Highlight currently open buffer in NERDTree
-autocmd BufRead * call SyncTree()
-
-
-"---Fuzzy Search & Ripgrep---
-"nnoremap <silent> <C-S-p> :Files<CR>
-"set wildmode=list:longest,list:full
-"set wildignore+=*.o,*.obj,.git,*.rbc,*.pyc,__pycache__
-"let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path '**/node_modules/**' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-"command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case --fixed-strings ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
-"nnoremap <silent> <leader>f :Rg<CR>
 
 "---Any jump---
 " Normal mode: Jump to definition under cursor
@@ -362,6 +462,7 @@ nnoremap <leader>ab :AnyJumpBack<CR>
 nnoremap <leader>al :AnyJumpLastResults<CR>
 
 "---GitBlame---
+let g:gitblame_enabled = 0
 nmap <leader>gb :GitBlameToggle<CR>
 
 "---Prettier---
@@ -383,7 +484,7 @@ let s:header = [
 \' ██░░┌┘▄▄▄▄▄░░░░░▄▄▄▄▄└┐░░██                   \____/  \___| \__|   |___/   \__||_| |_||_||_| |_||_|\_\                 ███▄▀█▄██ ██▄██ ██▄█▀▄███     ',
 \' ██▌░│██████▌░░░▐██████│░▐██                                                                                             ▀███▄▀██ █████ ██▀▄███▀      ',
 \' ███░│▐███▀▀░░▄░░▀▀███▌│░███                                  00:00 ━━━━━━●───── 15:08                                  █▄ ▀█████ █████ █████▀ ▄█     ',
-\' ██▀─┘░░░░░░░▐█▌░░░░░░░└─▀██                                         ⇆ ◁ ㅤ❚❚ ▷ ↻                                         ███        ███        ███     ',
+\' ██▀─┘░░░░░░░▐█▌░░░░░░░└─▀██                                         ⇆ ◁ ㅤ❚❚ ↻                                         ███        ███        ███     ',
 \' ██▄░░░▄▄▄▓░░▀█▀░░▓▄▄▄░░░▄██                        +--------------------------------------------+                      ███▄    ▄█ ███ █▄    ▄███     ',
 \' ████▄─┘██▌░░░░░░░▐██└─▄████                        | "Khi ta không làm ra tiền nghĩa là ta đang |                      █████ ▄███ ███ ███▄ █████     ',
 \' █████░░▐█─┬┬┬┬┬┬┬─█▌░░█████                        |   yếu đuối với bản thân và đồng nghĩa với  |                      █████ ████ ███ ████ █████     ',
@@ -418,6 +519,7 @@ let g:startify_custom_footer = startify#center(s:footer)
 
 let g:coc_global_extensions = [
   \ 'coc-ultisnips',
+  \ 'coc-emmet',
   \ 'coc-json',
   \ 'coc-tsserver',
   \ 'coc-html',
