@@ -22,7 +22,9 @@
     "typescriptreact",
     "json"
   ],
-"suggest.completionItemKindLabels": {
+  "tsserver.formatOnType": false,
+  "coc.preferences.formatOnType": false,
+  "suggest.completionItemKindLabels": {
     "method": "  ",
     "function": " unction ",
     "variable": "[]",
@@ -48,5 +50,6 @@
     "constructor": "  ",
     "value": "  ",
     "enumMember": "  "
-  }
+  },
+  "rainbow-fart.enabled": true
 }
