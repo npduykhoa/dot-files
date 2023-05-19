@@ -1,13 +1,10 @@
 {
   "suggest.floatEnable": false,
-  "suggest.autoTrigger": "trigger",
-  "diagnostic.checkCurrentLine": true,
-  "diagnostic.virtualText": true,
+  "suggest.autoTrigger": "always",
+  "suggest.noselect": false,
   "diagnostic.errorSign": "",
   "git.changedSign.text": "פֿ",
   "git.removedSign.text": "",
-  "signature.enable": false,
-  "codeLens.enable": false,
   "javascript.validate.enable": false,
   "eslint.autoFixOnSave": true,
   "eslint.quiet": true,
@@ -22,6 +19,15 @@
     "typescriptreact",
     "json"
   ],
+  "snippets.ultisnips.enable": false,
+  "snippets.extends": {
+    "javascriptreact": [
+      "javascript"
+    ],
+    "typescript": [
+      "javascript"
+    ]
+  },
   "tsserver.formatOnType": false,
   "coc.preferences.formatOnType": false,
   "suggest.completionItemKindLabels": {
@@ -51,5 +57,8 @@
     "value": "  ",
     "enumMember": "  "
   },
-  "rainbow-fart.enabled": true
+  "suggest.floatConfig": {
+    "rounded": true,
+    "border": true
+  }
 }
