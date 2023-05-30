@@ -26,7 +26,7 @@ cmd('set laststatus=2')
 cmd('set updatetime=300')
 cmd('set autoread')
 cmd('set signcolumn=number')
-
+cmd('set shortmess-=S')
 --Searching
 cmd('set hlsearch')
 cmd('set incsearch')

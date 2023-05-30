@@ -8,7 +8,7 @@ end
 M.mapping = function()
   cmd('nmap dc :DiffviewClose<CR>')
   cmd('nmap do :DiffviewOpen<CR>')
-  cmd('nmap dh :DiffviewFileHistory<CR>')
+  cmd('nmap dh :DiffviewFileHistory %<CR>')
 end
 
 return M
