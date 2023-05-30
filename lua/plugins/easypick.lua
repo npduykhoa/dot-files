@@ -14,7 +14,8 @@ M.setup = function()
       {
         name = "changed_files",
         command = "git diff --name-only $(git merge-base HEAD " .. base_branch .. " )",
-        previewer = easypick.previewers.branch_diff({base_branch = base_branch})
+        -- previewer = easypick.previewers.branch_diff({base_branch = base_branch})
+        previewer = easypick.previewers.file_diff()
       },
       {
         name = "conflicts",
@@ -23,6 +24,8 @@ M.setup = function()
       },
     }
   })
+
+  M.mapping()
 end
 
 M.mapping = function()

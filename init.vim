@@ -16,8 +16,9 @@ Plug 'nvim-lualine/lualine.nvim'
 
 " Highlight Tokens
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-refactor'
-Plug 'p00f/nvim-ts-rainbow'
+" Plug 'nvim-treesitter/nvim-treesitter-refactor'
+" Plug 'p00f/nvim-ts-rainbow'
+Plug 'HiPhish/nvim-ts-rainbow2'
 
 " Popup
 Plug 'voldikss/vim-floaterm' | Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
@@ -37,7 +38,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Indent Line
 Plug 'lukas-reineke/indent-blankline.nvim'
-
+" Plug 'shellRaining/hlchunk.nvim'
+Plug 'yaocccc/nvim-hlchunk'
 " Go to detail
 Plug 'ryenguyen7411/any-jump.vim'
 
@@ -45,7 +47,10 @@ Plug 'ryenguyen7411/any-jump.vim'
 Plug 'skywind3000/vim-keysound'
 
 " Comment line
-Plug 'JoosepAlviste/nvim-ts-context-commentstring' | Plug 'tpope/vim-commentary'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'tpope/vim-commentary'
+" Plug 'suy/vim-context-commentstring'
+
 
 " Funny Vim
 "Plug 'edluffy/specs.nvim'
