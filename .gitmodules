@@ -1,0 +1,3 @@
+[submodule "plugged/any-jump.vim"]
+	path = plugged/any-jump.vim
+	url = https://github.com/npduykhoa/dot-files.git
