@@ -25,7 +25,6 @@ augroup('HighlightExtraWhitespace', {
 
 --Transparent background
 cmd('au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE')
-cmd('au VimEnter * hi HLIndentLine guifg=#00ffff')
 
 -- -- PATCH: in order to address the message:
 -- -- vim.treesitter.query.get_query() is deprecated, use vim.treesitter.query.get() instead. :help deprecated
