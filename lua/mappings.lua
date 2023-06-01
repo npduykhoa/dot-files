@@ -100,6 +100,11 @@ cmd([[
   omap s :normal vs<CR>
 ]])
 
+--Replace ll highlight
+cmd('nnoremap <c-n> :%s///g<left><left>')
+--Also replace all but loop each highlight (can ignore)
+cmd('nnoremap <c-m> :%s///gc<left><left><left>')
+
 ---Prettier---
 -- cmd([[autocmd BufReadPost * echo strftime("%c")]])
 -- cmd([[
