@@ -126,6 +126,7 @@ M.setup = function()
             ['<C-p>'] = fb_actions.move,
             ['<C-y>'] = fb_actions.copy,
             ['<C-d>'] = fb_actions.remove,
+            ['<C-w>'] = fb_actions.goto_cwd,
           },
         },
         hidden = true,

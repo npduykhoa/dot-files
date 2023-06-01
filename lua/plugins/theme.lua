@@ -64,6 +64,6 @@ M.setup = function()
 
 end
 
-vim.cmd("colorscheme tokyonight")
+vim.cmd("colorscheme tokyonight-storm")
 
 return M

@@ -38,8 +38,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Indent Line
 Plug 'lukas-reineke/indent-blankline.nvim'
-" Plug 'shellRaining/hlchunk.nvim'
-Plug 'yaocccc/nvim-hlchunk'
+Plug 'shellRaining/hlchunk.nvim'
+" Plug 'yaocccc/nvim-hlchunk'
 " Go to detail
 Plug 'ryenguyen7411/any-jump.vim'
 
@@ -49,7 +49,6 @@ Plug 'skywind3000/vim-keysound'
 " Comment line
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'tpope/vim-commentary'
-" Plug 'suy/vim-context-commentstring'
 
 
 " Funny Vim
