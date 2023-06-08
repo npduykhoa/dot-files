@@ -10,11 +10,11 @@ M.setup = function()
       enable = true,
       use_treesitter = true,
       chars = {
-          horizontal_line = "─",
+          horizontal_line = "⌲",
           vertical_line = "│",
           left_top = "╭",
           left_bottom = "╰",
-          right_arrow = ">",
+          right_arrow = "⌲",
       },
       style = {
           { fg = "#00ffff" },

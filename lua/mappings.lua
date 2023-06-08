@@ -46,13 +46,6 @@ vim.opt.list = true
 --vim.opt.listchars:append "space:⋅"
 vim.opt.listchars:append "eol:↴"
 
----Search keyword & replace all in file---
--- cmd([[
---   vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
---     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
---   omap s :normal vs<CR>
--- ]])
-
 --nmap <leader>r :e!<CR>
 --au ColorScheme * highlight Visual guibg=#71052e
 
@@ -100,15 +93,7 @@ cmd([[
   omap s :normal vs<CR>
 ]])
 
---Replace ll highlight
+--Replace all highlight
 cmd('nnoremap <c-n> :%s///g<left><left>')
 --Also replace all but loop each highlight (can ignore)
 cmd('nnoremap <c-m> :%s///gc<left><left><left>')
-
----Prettier---
--- cmd([[autocmd BufReadPost * echo strftime("%c")]])
--- cmd([[
---   command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
---   let g:prettier#autoformat = 1
---   let g:prettier#autoformat_require_pragma = 0
--- ]])
