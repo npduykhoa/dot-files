@@ -7,7 +7,8 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'windwp/nvim-ts-autot
 Plug 'neovim/nvim-lspconfig'
 
 " Greeting Screen
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
+Plug 'echasnovski/mini.nvim'
 
 " Fonts & Themes
 Plug 'kyazdani42/nvim-web-devicons'
@@ -39,7 +40,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Indent Line
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'shellRaining/hlchunk.nvim'
-" Plug 'yaocccc/nvim-hlchunk'
 " Go to detail
 Plug 'ryenguyen7411/any-jump.vim'
 
@@ -64,13 +64,8 @@ let g:coc_global_extensions = [
   \ 'coc-emmet',
   \ 'coc-json',
   \ 'coc-tsserver',
-  \ 'coc-html',
   \ 'coc-css',
-  \ 'coc-yaml',
-  \ 'coc-highlight',
-  \ 'coc-eslint',
-  \ 'coc-git',
-  \ 'coc-prettier',
+  \ 'coc-html',
   \ ]
 
 lua << EOF
@@ -102,8 +97,10 @@ lspconfig.setup()
 local anyjump = require("plugins.any_jump")
 anyjump.setup()
 
-local startify = require("plugins.startify")
-startify.setup()
+-- local startify = require("plugins.startify")
+-- startify.setup()
+local mini = require("plugins.mini")
+mini.setup()
 
 local floaterm = require("plugins.floaterm")
 floaterm.setup()

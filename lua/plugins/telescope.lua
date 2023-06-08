@@ -1,7 +1,7 @@
 local M = {}
-local v = require('vimp')
 local telescope = require("telescope")
-local cmd = vim.cmd
+local keymap = vim.keymap.set
+local opts = { silent = true }
 
 M.setup = function()
   local actions = require('telescope.actions')
@@ -31,20 +31,16 @@ M.setup = function()
         width = 0.8,
         height = 0.8,
       },
-      borderchars = { 
+      borderchars = {
         "─", "│", "─", "│", "╭", "╮", "╯", "╰"
       },
       vimgrep_arguments = {
         'rg',
         '-FHLSn.',
-        -- '--hidden',
         '--color=never',
         '--no-heading',
-        -- '--with-filename',
         '--line-number',
-        '--column',
-        -- '--smart-case',
-        -- '--fixed-strings',
+        '--column', 
         '--sort-files',
         '--trim',
         '--no-ignore',
@@ -89,18 +85,8 @@ M.setup = function()
          'fd',
          '-FHIL',
           '--type=f',
-          -- 'f',
           '--color=never',
-          -- '--hidden',
-          -- '--follow',
           '--strip-cwd-prefix', -- Remove ./ prefix in find_files
-          -- '--no-ignore-vcs',
-          -- '--exclude=node_modules',
-          -- '--exclude=.git',
-          -- '--exclude=dist*',
-          -- '--exclude=build',
-          -- '--exclude=.gradle',
-          -- '--exclude=.next',
           '--no-ignore',
           '--ignore-file',
           os.getenv("HOME") .. '/.config/fd/.fdignore',
@@ -131,7 +117,6 @@ M.setup = function()
         },
         hidden = true,
         respect_gitignore = false,
-        -- dir_icon = "",
         grouped = true,
         select_buffer = true,
         display_stat = false,
@@ -148,11 +133,11 @@ M.setup = function()
 end
 
 M.mapping = function ()
-  cmd('nnoremap <leader>ff <cmd>Telescope find_files<cr>')
-  cmd('nnoremap <leader>fg <cmd>Telescope live_grep<cr>')
-  cmd('nnoremap <leader>bf <cmd>Telescope buffers<cr>')
-  cmd('nnoremap <leader>fb :Telescope file_browser path=%:p:h<cr>')
-  vim.keymap.set("n", '<leader>l', '<cmd>lua require("telescope").extensions.project.project{ display_type="full" }<CR>')
+  keymap('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
+  keymap('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
+  keymap('n', '<leader>bf', '<cmd>Telescope buffers<cr>', opts)
+  keymap('n', '<leader>fb', ':Telescope file_browser path=%:p:h<cr>', opts)
+  keymap('n', '<leader>l', '<cmd>lua require("telescope").extensions.project.project{ display_type="full" }<CR>', opts)
 end
 
 return M

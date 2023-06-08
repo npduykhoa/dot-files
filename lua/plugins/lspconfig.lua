@@ -1,6 +1,5 @@
 local M = {}
 local lspconfig = require('lspconfig')
-local v = require('vimp')
 
 M.setup = function()
   vim.diagnostic.config({
@@ -30,13 +29,14 @@ M.setup = function()
         autocmd BufWritePre <buffer> EslintFixAll
       augroup END
       ]])
-      M.attach(client, bufnr)
+      -- M.attach(client, bufnr)
     end,
     settings = {
       codeActionOnSave = {
         enable = true,
         mode = "all"
       },
+      format = true,
     },
   })
   lspconfig.stylelint_lsp.setup({

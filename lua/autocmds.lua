@@ -26,6 +26,8 @@ augroup('HighlightExtraWhitespace', {
 --Transparent background
 cmd('au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE')
 
+-- cmd([[autocmd TermEnter term://*toggleterm#*
+--       \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>v]])
 -- -- PATCH: in order to address the message:
 -- -- vim.treesitter.query.get_query() is deprecated, use vim.treesitter.query.get() instead. :help deprecated
 -- --   This feature will be removed in Nvim version 0.10

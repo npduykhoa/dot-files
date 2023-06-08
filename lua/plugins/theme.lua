@@ -62,8 +62,8 @@ M.setup = function()
     vim.cmd('au VimEnter * highlight ' .. part .. ' ctermbg=NONE guibg=NONE')
   end
 
-end
+  vim.cmd("colorscheme tokyonight-storm")
 
-vim.cmd("colorscheme tokyonight-storm")
+end
 
 return M
