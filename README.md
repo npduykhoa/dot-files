@@ -1,7 +1,6 @@
-
-<img width="1440" alt="Screen Shot 2022-07-28 at 16 23 32" src="https://user-images.githubusercontent.com/55375876/181916036-8da2250b-a00b-432d-94bf-e08c87233bed.png">
-
-![Screen Shot 2022-07-30 at 20 50 41](https://user-images.githubusercontent.com/55375876/181917434-9938ffdf-fd8f-4924-a07c-f84429de4198.png)
+![CleanShot 2023-06-09 at 05 13 51](https://github.com/npduykhoa/dot-files/assets/55375876/8b2d2df3-17e2-46e6-bcb0-034eec9189b6)
+![CleanShot 2023-06-09 at 05 14 50](https://github.com/npduykhoa/dot-files/assets/55375876/2c2432e6-bd5f-4894-bc06-720a15177050)
+![CleanShot 2023-06-09 at 05 15 15](https://github.com/npduykhoa/dot-files/assets/55375876/91a23180-a8b9-4512-9f9f-1d4e7e2d7b5c)
 
 Resources:
 - https://github.com/ryenguyen7411/dot-files
