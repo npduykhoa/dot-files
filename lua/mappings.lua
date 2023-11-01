@@ -1,5 +1,6 @@
 local cmd = vim.cmd
 local g = vim.g
+local keyset = vim.keymap.set
 
 g.mapleader=' '
 
@@ -22,8 +23,8 @@ cmd('nnoremap <leader>d :vertical resize -10<CR>')
 ---Visual mode---
 cmd('vmap < <gv')
 cmd('vmap > >gv')
-cmd("vmap J :m '>+1<CR>gv=gvzz'")
-cmd("vmap K :m '<-2<CR>gv=gvzz'")
+cmd("vmap J :m '>+1<CR>gv=gvzz")
+cmd("vmap K :m '<-2<CR>gv=gvzz")
 
 ---Clear all buffers---
 vim.keymap.set("n", "<leader>bo", "<cmd>%bd|e#<cr>", {desc="Close all buffers but the current one"})
@@ -59,8 +60,6 @@ g.gitblame_enabled = 0
 cmd('nmap <leader>gb :GitBlameToggle<CR>')
 
 ---Auto Complete & Import---
-
-local keyset = vim.keymap.set
 -- Autocomplete
 function _G.check_back_space()
     local col = vim.fn.col('.') - 1
@@ -78,7 +77,7 @@ keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
 -- Make <CR> to accept selected completion item or notify coc.nvim to format
 -- <C-g>u breaks current undo, please make your own choice
-keyset("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+keyset("i", "<CR>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
 
 -- Use <c-j> to trigger snippets
 keyset("i", "<c-j>", "<Plug>(coc-snippets-expand-jump)")
@@ -92,8 +91,3 @@ cmd([[
     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
   omap s :normal vs<CR>
 ]])
-
---Replace all highlight
-cmd('nnoremap <c-n> :%s///g<left><left>')
---Also replace all but loop each highlight (can ignore)
-cmd('nnoremap <c-m> :%s///gc<left><left><left>')

@@ -29,7 +29,7 @@ M.setup = function()
         autocmd BufWritePre <buffer> EslintFixAll
       augroup END
       ]])
-      -- M.attach(client, bufnr)
+      M.attach(client, bufnr)
     end,
     settings = {
       codeActionOnSave = {
@@ -56,6 +56,13 @@ M.setup = function()
       },
     },
   })
+end
+
+M.attach = function(client, bufnr)
+  local opts = { noremap = true, silent = true }
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gl', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
 end
 
 return M

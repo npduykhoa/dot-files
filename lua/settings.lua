@@ -32,7 +32,7 @@ cmd('set hlsearch')
 cmd('set incsearch')
 cmd('set ignorecase')
 cmd('set smartcase')
---set termguicolors
+-- cmd('set termguicolors')
 --vim faster configs
 cmd('set lazyredraw')
 cmd('set ttyfast')
